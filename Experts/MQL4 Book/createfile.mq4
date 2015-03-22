@@ -13,7 +13,7 @@ extern string Text_4="";   // USD USA unemployment rate
 extern string Date_5="";   // 2007.05.11 18:30
 extern string Text_5="";   // JPY Industrial production
 //--------------------------------------------------------------- 2 --
-int start()                            // Spec. function start()
+int start() // Spec. function start()
   {
 //--------------------------------------------------------------- 3 --
    int Handle,                         // File descriptor
@@ -33,21 +33,21 @@ int start()                            // Spec. function start()
    Erray[4,1]=Text_5;
 //--------------------------------------------------------------- 5 --
    Handle=FileOpen(File_Name,FILE_CSV|FILE_WRITE,";");//File opening
-   if(Handle==-1)                      // File opening fails
+   if(Handle==-1) // File opening fails
      {
       Alert("An error while opening the file. ",// Error message
-              "May be the file is busy by the other applictiom");
+            "May be the file is busy by the other applictiom");
       PlaySound("Bzrrr.wav");          // Sound accompaniment
       return;                          // Exir start()      
      }
 //--------------------------------------------------------------- 6 --
-   for(int i=0; i<=4; i++)             // Cycle throughout the array
+   for(int i=0; i<=4; i++) // Cycle throughout the array
      {
       if(StringLen(Erray[i,0])== 0  || // If the value of the first or..
          StringLen(Erray[i,1])== 0)    // ..second variable is not entered
          break;                        // .. then exit the cycle
       Qnt_Symb=FileWrite(Handle,Erray[i,0],Erray[i,1]);//Writing to the file
-      if(Qnt_Symb < 0)                 // If failed
+      if(Qnt_Symb<0) // If failed
         {
          Alert("Error writing to the file",GetLastError());// Message
          PlaySound("Bzrrr.wav");       // Sound accompaniment
@@ -56,7 +56,7 @@ int start()                            // Spec. function start()
         }
      }
 //--------------------------------------------------------------- 7 --
-   FileClose( Handle );                // File closing
+   FileClose(Handle);                // File closing
    Alert("The ",File_Name," file created.");// Message
    PlaySound("Bulk.wav");              // Sound accompaniment
    return;                             // Exit start()
