@@ -329,45 +329,21 @@ int CIndicators::TimeframesFlags(const MqlDateTime &time)
    last=m_prev_time.hour;
    if(curr!=last)
      {
-      if(curr%2!=0 && curr-last<2)
-         result^=OBJ_PERIOD_H2;
-      if(curr%3!=0 && curr-last<3)
-         result^=OBJ_PERIOD_H3;
       if(curr%4!=0 && curr-last<4)
          result^=OBJ_PERIOD_H4;
-      if(curr%6!=0 && curr-last<6)
-         result^=OBJ_PERIOD_H6;
-      if(curr%8!=0 && curr-last<8)
-         result^=OBJ_PERIOD_H8;
-      if(curr%12!=0 && curr-last<12)
-         result^=OBJ_PERIOD_H12;
       return(result);
      }
 //--- reset all flags for hour timeframes
-   result^=OBJ_PERIOD_H1+OBJ_PERIOD_H2+OBJ_PERIOD_H3+OBJ_PERIOD_H4+OBJ_PERIOD_H6+OBJ_PERIOD_H8+OBJ_PERIOD_H12;
+   result^=OBJ_PERIOD_H1+OBJ_PERIOD_H4;
 //--- new minute?
    curr=time.min;
    last=m_prev_time.min;
    if(curr!=last)
      {
-      if(curr%2!=0 && curr-last<2)
-         result^=OBJ_PERIOD_M2;
-      if(curr%3!=0 && curr-last<3)
-         result^=OBJ_PERIOD_M3;
-      if(curr%4!=0 && curr-last<4)
-         result^=OBJ_PERIOD_M4;
       if(curr%5!=0 && curr-last<5)
          result^=OBJ_PERIOD_M5;
-      if(curr%6!=0 && curr-last<6)
-         result^=OBJ_PERIOD_M6;
-      if(curr%10!=0 && curr-last<10)
-         result^=OBJ_PERIOD_M10;
-      if(curr%12!=0 && curr-last<12)
-         result^=OBJ_PERIOD_M12;
       if(curr%15!=0 && curr-last<15)
          result^=OBJ_PERIOD_M15;
-      if(curr%20!=0 && curr-last<20)
-         result^=OBJ_PERIOD_M20;
       if(curr%30!=0 && curr-last<30)
          result^=OBJ_PERIOD_M30;
      }

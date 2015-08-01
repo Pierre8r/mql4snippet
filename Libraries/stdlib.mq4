@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                       stdlib.mq4 |
-//|                   Copyright 2005-2014, MetaQuotes Software Corp. |
+//|                   Copyright 2005-2015, MetaQuotes Software Corp. |
 //|                                              http://www.mql4.com |
 //+------------------------------------------------------------------+
 #property copyright "2005-2014, MetaQuotes Software Corp."
@@ -103,6 +103,8 @@ string ErrorDescription(int error_code)
       case 4070: error_string="duplicate resource";                                        break;
       case 4071: error_string="cannot initialize custom indicator";                        break;
       case 4072: error_string="cannot load custom indicator";                              break;
+      case 4073: error_string="no history data";                                           break;
+      case 4074: error_string="no memory for history data";                                break;
       case 4099: error_string="end of file";                                               break;
       case 4100: error_string="some file error";                                           break;
       case 4101: error_string="wrong file name";                                           break;

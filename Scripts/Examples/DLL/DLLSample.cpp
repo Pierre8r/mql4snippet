@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                              Sample DLL for MQL4 |
-//|                   Copyright 2001-2014, MetaQuotes Software Corp. |
+//|                   Copyright 2001-2015, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
 #define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Windows headers
