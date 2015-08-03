@@ -1,3 +1,8 @@
+//+------------------------------------------------------------------+
+//|                                                      ProjectName |
+//|                                      Copyright 2012, CompanyName |
+//|                                       http://www.companyname.net |
+//+------------------------------------------------------------------+
 /**************************************************************************************************
                                                                                 MyMovingAverage.mq4 
                                                                                         Broketrader 
@@ -42,45 +47,47 @@ input int                           FastMaPeriod      = 20;
 input int                           FastMaShift       = 0;
 input ENUM_MA_METHOD                FastMaMethod      = MODE_SMA;
 input ENUM_APPLIED_PRICE            FastMaPrice       = PRICE_CLOSE;
-const string                        FastMaLabel      = "FastMa";
+const string                        FastMaLabel="FastMa";
 
 const int                           SlowMaPlotIndex   = 1;
 input int                           SlowMaPeriod      = 50;
 input int                           SlowMaShift       = 0;
 input ENUM_MA_METHOD                SlowMaMethod      = MODE_SMA;
 input ENUM_APPLIED_PRICE            SlowMaPrice       = PRICE_CLOSE;
-const string                        SlowMaLabel      = "SlowMa";
+const string                        SlowMaLabel="SlowMa";
 
 MyMovingAverage                     FastMA;
 MyMovingAverage                     SlowMA;
-
-
-
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 /**************************************************************************************************
    OnInit()
    Initializes Indicator al Variables
 **************************************************************************************************/
-int OnInit() {
+int OnInit() 
+  {
 
    IndicatorBuffers( 2 );                    // We have two indicators
    IndicatorDigits( Digits );                // Digits for visualizing its value.
-   
-   if( ! FastMA.Initialize( FastMaPlotIndex, FastMaPeriod, FastMaShift, FastMaMethod, FastMaPrice, FastMaLabel, DRAW_LINE ) ){
-      return INIT_FAILED;
-   }
 
-   if( ! SlowMA.Initialize( SlowMaPlotIndex, SlowMaPeriod, SlowMaShift, SlowMaMethod, SlowMaPrice, SlowMaLabel, DRAW_LINE ) ){
+   if(!FastMA.Initialize(FastMaPlotIndex,FastMaPeriod,FastMaShift,FastMaMethod,FastMaPrice,FastMaLabel,DRAW_LINE))
+     {
       return INIT_FAILED;
-   }
-   
+     }
+
+   if(!SlowMA.Initialize(SlowMaPlotIndex,SlowMaPeriod,SlowMaShift,SlowMaMethod,SlowMaPrice,SlowMaLabel,DRAW_LINE))
+     {
+      return INIT_FAILED;
+     }
+
    MyMovingAverage::ClearArrows();
-   
+
    return INIT_SUCCEEDED;
-}
-
-
-
-
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 /**************************************************************************************************
    OnCalculate()
    Indicator Iteration function
@@ -95,17 +102,15 @@ int OnCalculate(const int rates_total,
                 const long &tick_volume[],
                 const long &volume[],
                 const int &spread[])
-{
-   ArraySetAsSeries( time, false );
-   
-   FastMA.Compute( rates_total, prev_calculated, open, high, low, close ); 
-   SlowMA.Compute( rates_total, prev_calculated, open, high, low, close ); 
-   
-   MyMovingAverage::ShowCrossings( rates_total, time, FastMA, SlowMA );
-   
-   
+  {
+   ArraySetAsSeries(time,false);
+
+   FastMA.Compute( rates_total, prev_calculated, open, high, low, close );
+   SlowMA.Compute( rates_total, prev_calculated, open, high, low, close );
+
+   MyMovingAverage::ShowCrossings(rates_total,time,FastMA,SlowMA);
+
    return(rates_total);
-   
-}
 
-
+  }
+//+------------------------------------------------------------------+

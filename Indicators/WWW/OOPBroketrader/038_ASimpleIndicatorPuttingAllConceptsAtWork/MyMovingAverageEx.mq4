@@ -1,3 +1,8 @@
+//+------------------------------------------------------------------+
+//|                                                      ProjectName |
+//|                                      Copyright 2012, CompanyName |
+//|                                       http://www.companyname.net |
+//+------------------------------------------------------------------+
 /**************************************************************************************************
                                                                                 MyMovingAverage.mq4 
                                                                                         Broketrader 
@@ -36,16 +41,16 @@ input int                           MAShift  = 0;
 input ENUM_MA_METHOD                MAMethod = MODE_SMA;
 input ENUM_APPLIED_PRICE            MAPrice  = PRICE_CLOSE;
 double                              MainBuffer[];
-MyMovingAverage*                    MyMA;
-
-
-
-
+MyMovingAverage                    *MyMA;
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 /**************************************************************************************************
    OnInit()
    Initializes Indicator al Variables
 **************************************************************************************************/
-int OnInit() {
+int OnInit() 
+  {
    IndicatorBuffers( 1 );                    // We have only one indicator
    IndicatorDigits( Digits );                // Digits showwhen visualizing indicator value.
    SetIndexStyle( 0, DRAW_LINE );            // MA shown as a simple line
@@ -53,27 +58,27 @@ int OnInit() {
    SetIndexShift( 0, MAShift );              // Apply user shift
    SetIndexLabel( 0, "MyMovingAverage" );    // Index Label
    ArrayInitialize( MainBuffer ,0);          // Initializes the array
-  
-   // Check that input parameter is valid
-   if( MAPeriod <= 0 ) {
-      Print( "Wrong input parameter MAPeriod" );
+
+                                             // Check that input parameter is valid
+   if(MAPeriod<=0) 
+     {
+      Print("Wrong input parameter MAPeriod");
       return INIT_FAILED;
-   }
-   
-   // Instantiate indicator objects
-   switch( MAMethod ) {
+     }
+
+// Instantiate indicator objects
+   switch(MAMethod) 
+     {
       case MODE_SMA: MyMA = new MySimpleMovingAverage( MAPeriod ); break;
       case MODE_EMA: MyMA = new MyExponentialMovingAverage( MAPeriod ); break;
       // Other types not yet implemented
-   }
-   
-   
+     }
+
    return INIT_SUCCEEDED;
-}
-
-
-
-
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 /**************************************************************************************************
    OnCalculate()
    Indicator Iteration function
@@ -88,16 +93,15 @@ int OnCalculate(const int rates_total,
                 const long &tick_volume[],
                 const long &volume[],
                 const int &spread[])
-{
-   
-   ArraySetAsSeries( MainBuffer, false );
-   ArraySetAsSeries( close, false );
+  {
 
-   MyMA.Compute( rates_total, prev_calculated, close, MainBuffer ); 
-   
-   // Return number of calculated rates.
+   ArraySetAsSeries(MainBuffer,false);
+   ArraySetAsSeries(close,false);
+
+   MyMA.Compute(rates_total,prev_calculated,close,MainBuffer);
+
+// Return number of calculated rates.
    return(rates_total);
-   
-}
 
-
+  }
+//+------------------------------------------------------------------+
