@@ -1,5 +1,5 @@
 //+------------------------------------------------------------------+
-//|                                                     eaLogger.mq4 |
+//|                                                         eaMM.mq4 |
 //|                                   Copyright 2015, Pierre Rougier |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
@@ -10,21 +10,15 @@
 
 #include "libLogger.mq4"
 
-//WrongParameter must be between values 0 and 1.
-//Values 0.2 and 0.321 are corrects, value 1.2 is incorrect.
-//This is a fatal error we have to stop the program.
-extern double WrongParameter=1.2;
+extern int exStopLossInPips=10;
+bool isNoOpenedOrderPreviously=TRUE;
+
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
 int OnInit()
   {
 //---
-
-   if((WrongParameter<0) || (WrongParameter>1))
-     {
-      Log(FATAL,StringConcatenate(__FILE__,__FUNCTION__,__LINE__,"WrongParameter must be between values 0 and 1. Value :",WrongParameter," is incorrect."));
-     }
 
 //---
    return(INIT_SUCCEEDED);
@@ -43,6 +37,32 @@ void OnDeinit(const int reason)
 void OnTick()
   {
 //---
+   double NumberOfLotsToOpen;
 
+   if(TimeToString(Time[0],TIME_DATE|TIME_MINUTES)>"2015.08.12 15:00")
+     {
+      if(isNoOpenedOrderPreviously)
+        {
+         NumberOfLotsToOpen=1;
+         OpenThisNumberOfLots(NumberOfLotsToOpen);
+        }
+     }
+/*     
+    if    isPreviouslyOpenedOrderPreviously
+      PrintFormat("Time :%s  Bar:%i  Close[i]:%G  _echelon:%G",TimeToString(Time[intBars]),intBars,Close[intBars],_echelon);
+      Print("_SEARCHING :"+EnumToString(_SEARCHING));
+     }
+*/
+  }
+//+------------------------------------------------------------------+
+void OpenThisNumberOfLots(const double &NumberOfLotsToOpen)
+  {
+   int ticketOrder=0;
+   RefreshRates();
+   ticketOrder=OrderSend(Symbol(),OP_BUY,NumberOfLotsToOpen,Ask,40,NULL,0,"",m_MagicNumber,0,CLR_NONE);
+   if(ticketOrder<0)
+     {
+      Log(ERROR,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("Problème ouverture Ordre : ",ErrorDescription(GetLastError()),"  NumberOfLotsToOpen :",NumberOfLotsToOpen));
+     }
   }
 //+------------------------------------------------------------------+
