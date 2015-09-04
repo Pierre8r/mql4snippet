@@ -8,11 +8,15 @@
 #property version   "1.00"
 #property strict
 
+#include <stdlib.mqh>
+#include <stderror.mqh>
+
 #include "libLogger.mq4"
 
 extern int exStopLossInPips=10;
-bool isNoOpenedOrderPreviously=TRUE;
+bool isOpenedOrderPreviously=FALSE;
 
+int m_MagicNumber=2015;
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
@@ -37,16 +41,42 @@ void OnDeinit(const int reason)
 void OnTick()
   {
 //---
+ Asmaou en local
+ 
    double NumberOfLotsToOpen;
+   
+   datetime StartDateTime = D'2015.08.12 00:00';
+   datetime EndDateTime = D'2015.08.12 00:02';
 
-   if(TimeToString(Time[0],TIME_DATE|TIME_MINUTES)>"2015.08.12 15:00")
+   if((Time[0]>StartDateTime)&&(Time[0]<EndDateTime))
      {
-      if(isNoOpenedOrderPreviously)
+      Log(DEBUG,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("TimeToString(Time[0],TIME_DATE|TIME_MINUTES) : ",TimeToString(Time[0],TIME_DATE|TIME_MINUTES)));
+
+      if(!isOpenedOrderPreviously)
         {
          NumberOfLotsToOpen=1;
          OpenThisNumberOfLots(NumberOfLotsToOpen);
+         isOpenedOrderPreviously=TRUE;
         }
      }
+/*
+   if((TimeToString(Time[0],TIME_DATE|TIME_MINUTES)>"2015.08.12 00:00")&&(Time[0],TIME_DATE|TIME_MINUTES)<"2015.08.12 01:00"))
+     {
+      Log(DEBUG,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("TimeToString(Time[0],TIME_DATE|TIME_MINUTES) : ",TimeToString(Time[0],TIME_DATE|TIME_MINUTES)));
+     }
+*/
+/*
+   if(TimeToString(Time[0],TIME_DATE|TIME_MINUTES)>"2015.08.12 00:00")
+     {
+      Log(DEBUG,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("TimeToString(Time[0],TIME_DATE|TIME_MINUTES) : ",TimeToString(Time[0],TIME_DATE|TIME_MINUTES)));
+      if(!isOpenedOrderPreviously)
+        {
+         NumberOfLotsToOpen=1;
+         OpenThisNumberOfLots(NumberOfLotsToOpen);
+         isOpenedOrderPreviously=TRUE;
+        }
+     }
+     */
 /*     
     if    isPreviouslyOpenedOrderPreviously
       PrintFormat("Time :%s  Bar:%i  Close[i]:%G  _echelon:%G",TimeToString(Time[intBars]),intBars,Close[intBars],_echelon);
