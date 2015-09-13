@@ -41,35 +41,24 @@ void OnDeinit(const int reason)
 void OnTick()
   {
 //---
-
-   MqlTick last_tick;
+ Asmaou en local
+ 
    double NumberOfLotsToOpen;
-   double StopLoss=1.13052;
+   
+   datetime StartDateTime = D'2015.08.12 00:00';
+   datetime EndDateTime = D'2015.08.12 00:02';
 
-   datetime OpenFirstOrderAtThisDateTime=D'2015.08.25 17:01:00';
-
-   if(SymbolInfoTick(Symbol(),last_tick))
+   if((Time[0]>StartDateTime)&&(Time[0]<EndDateTime))
      {
+      Log(DEBUG,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("TimeToString(Time[0],TIME_DATE|TIME_MINUTES) : ",TimeToString(Time[0],TIME_DATE|TIME_MINUTES)));
+
       if(!isOpenedOrderPreviously)
         {
-         if((last_tick.time==OpenFirstOrderAtThisDateTime))
-           {
-            Log(DEBUG,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("TimeToString(Time[0]) : ",TimeToString(Time[0],TIME_DATE|TIME_SECONDS),
-                " Ask :",Ask," Bid :",Bid," TimeSeconds :",TimeSeconds(last_tick.time)));
-            Log(DEBUG,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("Account currency is ",AccountCurrency()," Equity = ",AccountEquity(),
-                " Digits ",Digits()," Point ",Point()));
-
-            NumberOfLotsToOpen=1;
-            OpenBuy(NumberOfLotsToOpen,StopLoss);
-            isOpenedOrderPreviously=True;
-           }
+         NumberOfLotsToOpen=1;
+         OpenThisNumberOfLots(NumberOfLotsToOpen);
+         isOpenedOrderPreviously=TRUE;
         }
      }
-   else
-     {
-      Log(ERROR,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("SymbolInfoTick() failed, error = ",GetLastError()));
-     }
-
 /*
    if((TimeToString(Time[0],TIME_DATE|TIME_MINUTES)>"2015.08.12 00:00")&&(Time[0],TIME_DATE|TIME_MINUTES)<"2015.08.12 01:00"))
      {
@@ -94,17 +83,6 @@ void OnTick()
       Print("_SEARCHING :"+EnumToString(_SEARCHING));
      }
 */
-  }
-//+------------------------------------------------------------------+
-void OpenBuy(const double &NumberOfLotsToOpen,const double &StopLoss)
-  {
-   int ticketOrder=0;
-   RefreshRates();
-   ticketOrder=OrderSend(Symbol(),OP_BUY,NumberOfLotsToOpen,Ask,40,StopLoss,0,"",m_MagicNumber,0,clrLime);
-   if(ticketOrder<0)
-     {
-      Log(ERROR,__FILE__,__FUNCTION__,__LINE__,StringConcatenate("Problème ouverture Ordre : ",ErrorDescription(GetLastError()),"  NumberOfLotsToOpen :",NumberOfLotsToOpen));
-     }
   }
 //+------------------------------------------------------------------+
 void OpenThisNumberOfLots(const double &NumberOfLotsToOpen)
