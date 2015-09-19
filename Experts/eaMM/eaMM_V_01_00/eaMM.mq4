@@ -41,7 +41,7 @@ void OnDeinit(const int reason)
 void OnTick()
   {
 //---
-
+// commentaire ajouté par contributeur
    MqlTick last_tick;
    double NumberOfLotsToOpen;
    double StopLoss=1.13052;
