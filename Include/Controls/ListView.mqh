@@ -486,7 +486,7 @@ bool CListView::OnVScrollShow(void)
 //--- check visibility
    if(!IS_VISIBLE)
      {
-      m_scroll_v.Visible(true);
+      m_scroll_v.Visible(false);
       return(true);
      }
 //--- event is handled

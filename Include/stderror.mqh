@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                     stderror.mqh |
-//|                   Copyright 2005-2013, MetaQuotes Software Corp. |
+//|                   Copyright 2005-2015, MetaQuotes Software Corp. |
 //|                                              http://www.mql4.com |
 //+------------------------------------------------------------------+
 //--- errors returned from trade server
@@ -91,6 +91,8 @@
 #define ERR_RESOURCE_DUPLICATED                    4070   // new MQL4
 #define ERR_INDICATOR_CANNOT_INIT                  4071   // new MQL4
 #define ERR_INDICATOR_CANNOT_LOAD                  4072   // new MQL4
+#define ERR_NO_HISTORY_DATA                        4073   // new MQL4
+#define ERR_NO_MEMORY_FOR_HISTORY                  4074   // new MQL4
 #define ERR_END_OF_FILE                            4099
 #define ERR_SOME_FILE_ERROR                        4100
 #define ERR_WRONG_FILE_NAME                        4101

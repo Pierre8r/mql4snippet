@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                     ArrayObj.mqh |
-//|                   Copyright 2009-2013, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2015, MetaQuotes Software Corp. |
 //|                                              http://www.mql4.com |
 //+------------------------------------------------------------------+
 #include "Array.mqh"
@@ -102,6 +102,7 @@ int CArrayObj::MemMove(const int dest,const int src,const int count)
       return(dest);
 //--- copy
    if(dest<src)
+     {
       //--- copy from left to right
       for(i=0;i<count;i++)
         {
@@ -112,7 +113,9 @@ int CArrayObj::MemMove(const int dest,const int src,const int count)
          m_data[dest+i]=m_data[src+i];
          m_data[src+i]=NULL;
         }
+     }
    else
+     {
       //--- copy from right to left
       for(i=count-1;i>=0;i--)
         {
@@ -123,6 +126,7 @@ int CArrayObj::MemMove(const int dest,const int src,const int count)
          m_data[dest+i]=m_data[src+i];
          m_data[src+i]=NULL;
         }
+     }
 //--- successful
    return(dest);
   }
@@ -619,17 +623,13 @@ int CArrayObj::SearchLess(const CObject *element) const
 //+------------------------------------------------------------------+
 int CArrayObj::SearchGreatOrEqual(const CObject *element) const
   {
-   int pos;
 //--- check
    if(m_data_total==0 || !CheckPointer(element) || m_sort_mode==-1)
       return(-1);
 //--- search
-   if((pos=SearchGreat(element))!=-1)
-     {
-      if(pos!=0 && m_data[pos-1].Compare(element,m_sort_mode)==0)
-         return(pos-1);
-      return(pos);
-     }
+   for(int pos=QuickSearch(element);pos<m_data_total;pos++)
+      if(m_data[pos].Compare(element,m_sort_mode)>=0)
+         return(pos);
 //--- not found
    return(-1);
   }
@@ -639,17 +639,13 @@ int CArrayObj::SearchGreatOrEqual(const CObject *element) const
 //+------------------------------------------------------------------+
 int CArrayObj::SearchLessOrEqual(const CObject *element) const
   {
-   int pos;
 //--- check
    if(m_data_total==0 || !CheckPointer(element) || m_sort_mode==-1)
       return(-1);
 //--- search
-   if((pos=SearchLess(element))!=-1)
-     {
-      if(pos!=m_data_total-1 && m_data[pos+1].Compare(element,m_sort_mode)==0)
-         return(pos+1);
-      return(pos);
-     }
+   for(int pos=QuickSearch(element);pos>=0;pos--)
+      if(m_data[pos].Compare(element,m_sort_mode)<=0)
+         return(pos);
 //--- not found
    return(-1);
   }

@@ -416,7 +416,7 @@ class CiForce : public CIndicator
 protected:
    int               m_ma_period;
    ENUM_MA_METHOD    m_ma_method;
-   ENUM_APPLIED_VOLUME m_applied;
+   ENUM_APPLIED_PRICE m_applied;
 
 public:
                      CiForce(void);
@@ -424,10 +424,10 @@ public:
    //--- methods of access to protected data
    int               MaPeriod(void)        const { return(m_ma_period); }
    ENUM_MA_METHOD    MaMethod(void)        const { return(m_ma_method); }
-   ENUM_APPLIED_VOLUME Applied(void)       const { return(m_applied);   }
+   ENUM_APPLIED_PRICE Applied(void)        const { return(m_applied);   }
    //--- method of creation
    bool              Create(const string symbol,const ENUM_TIMEFRAMES period,
-                            const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_VOLUME applied);
+                            const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_PRICE applied);
    //--- methods of access to indicator data
    virtual double    GetData(const int buffer_num,const int index) const;
    double            Main(const int index) const;
@@ -438,7 +438,7 @@ protected:
    //--- methods of tuning
    virtual bool      Initialize(const string symbol,const ENUM_TIMEFRAMES period,const int num_params,const MqlParam &params[]);
    bool              Initialize(const string symbol,const ENUM_TIMEFRAMES period,
-                                const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_VOLUME applied);
+                                const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_PRICE applied);
   };
 //+------------------------------------------------------------------+
 //| Constructor                                                      |
@@ -458,7 +458,7 @@ CiForce::~CiForce(void)
 //| Create indicator "Force Index"                                   |
 //+------------------------------------------------------------------+
 bool CiForce::Create(const string symbol,const ENUM_TIMEFRAMES period,
-                     const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_VOLUME applied)
+                     const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_PRICE applied)
   {
    SetSymbolPeriod(symbol,period);
 //--- result of initialization
@@ -470,13 +470,13 @@ bool CiForce::Create(const string symbol,const ENUM_TIMEFRAMES period,
 bool CiForce::Initialize(const string symbol,const ENUM_TIMEFRAMES period,const int num_params,const MqlParam &params[])
   {
    return(Initialize(symbol,period,(int)params[0].integer_value,(ENUM_MA_METHOD)params[1].integer_value,
-          (ENUM_APPLIED_VOLUME)params[2].integer_value));
+          (ENUM_APPLIED_PRICE)params[2].integer_value));
   }
 //+------------------------------------------------------------------+
 //| Initialize the indicator with special parameters                 |
 //+------------------------------------------------------------------+
 bool CiForce::Initialize(const string symbol,const ENUM_TIMEFRAMES period,
-                         const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_VOLUME applied)
+                         const int ma_period,const ENUM_MA_METHOD ma_method,const ENUM_APPLIED_PRICE applied)
   {
    m_name="Force";
 //--- save settings
