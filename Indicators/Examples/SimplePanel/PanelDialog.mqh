@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                  PanelDialog.mqh |
-//|                   Copyright 2009-2014, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2015, MetaQuotes Software Corp. |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
 #include <Controls\Dialog.mqh>
@@ -67,17 +67,19 @@ protected:
    void              OnChangeRadioGroup(void);
    void              OnChangeCheckGroup(void);
    void              OnChangeListView(void);
+   bool              OnDefault(const int id,const long &lparam,const double &dparam,const string &sparam);
   };
 //+------------------------------------------------------------------+
 //| Event Handling                                                   |
 //+------------------------------------------------------------------+
 EVENT_MAP_BEGIN(CPanelDialog)
-   ON_EVENT(ON_CLICK,m_button1,OnClickButton1)
-   ON_EVENT(ON_CLICK,m_button2,OnClickButton2)
-   ON_EVENT(ON_CLICK,m_button3,OnClickButton3)
-   ON_EVENT(ON_CHANGE,m_radio_group,OnChangeRadioGroup)
-   ON_EVENT(ON_CHANGE,m_check_group,OnChangeCheckGroup)
-   ON_EVENT(ON_CHANGE,m_list_view,OnChangeListView)
+ON_EVENT(ON_CLICK,m_button1,OnClickButton1)
+ON_EVENT(ON_CLICK,m_button2,OnClickButton2)
+ON_EVENT(ON_CLICK,m_button3,OnClickButton3)
+ON_EVENT(ON_CHANGE,m_radio_group,OnChangeRadioGroup)
+ON_EVENT(ON_CHANGE,m_check_group,OnChangeCheckGroup)
+ON_EVENT(ON_CHANGE,m_list_view,OnChangeListView)
+ON_OTHER_EVENTS(OnDefault)
 EVENT_MAP_END(CAppDialog)
 //+------------------------------------------------------------------+
 //| Constructor                                                      |
@@ -342,5 +344,16 @@ void CPanelDialog::OnChangeRadioGroup(void)
 void CPanelDialog::OnChangeCheckGroup(void)
   {
    m_edit.Text(__FUNCTION__+" : Value="+IntegerToString(m_check_group.Value()));
+  }
+//+------------------------------------------------------------------+
+//| Rest events handler                                                    |
+//+------------------------------------------------------------------+
+bool CPanelDialog::OnDefault(const int id,const long &lparam,const double &dparam,const string &sparam)
+  {
+//--- restore buttons' states after mouse move'n'click
+   if(id==CHARTEVENT_CLICK)
+      m_radio_group.RedrawButtonStates();
+//--- let's handle event by parent
+   return(false);
   }
 //+------------------------------------------------------------------+

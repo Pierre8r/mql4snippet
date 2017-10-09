@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                        Trend.mqh |
-//|                   Copyright 2009-2013, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2016, MetaQuotes Software Corp. |
 //|                                              http://www.mql4.com |
 //+------------------------------------------------------------------+
 #include "Indicator.mqh"
@@ -453,11 +453,11 @@ double CiIchimoku::SenkouSpanB(const int index) const
    return(GetData(MODE_SENKOUSPANB,index));
   }
 //+------------------------------------------------------------------+
-//| Access to ChinkouSpan buffer of "Ichimoku Kinko Hyo"             |
+//| Access to ChikouSpan buffer of "Ichimoku Kinko Hyo"              |
 //+------------------------------------------------------------------+
 double CiIchimoku::ChinkouSpan(const int index) const
   {
-   return(GetData(MODE_CHINKOUSPAN,index));
+   return(GetData(MODE_CHIKOUSPAN,index));
   }
 //+------------------------------------------------------------------+
 //| Class CiMA.                                                      |

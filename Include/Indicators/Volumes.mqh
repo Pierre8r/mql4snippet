@@ -174,15 +174,15 @@ double CiMFI::Main(const int index) const
 class CiOBV : public CIndicator
   {
 protected:
-   ENUM_APPLIED_VOLUME m_applied;
+   ENUM_APPLIED_PRICE m_applied;
 
 public:
                      CiOBV(void);
                     ~CiOBV(void);
    //--- methods of access to protected data
-   ENUM_APPLIED_VOLUME Applied(void) const { return(m_applied); }
+   ENUM_APPLIED_PRICE Applied(void) const { return(m_applied); }
    //--- method create
-   bool              Create(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_VOLUME applied);
+   bool              Create(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_PRICE applied);
    //--- methods of access to indicator data
    virtual double    GetData(const int buffer_num,const int index) const;
    double            Main(const int index) const;
@@ -192,7 +192,7 @@ public:
 protected:
    //--- methods of tuning
    virtual bool      Initialize(const string symbol,const ENUM_TIMEFRAMES period,const int num_params,const MqlParam &params[]);
-   bool              Initialize(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_VOLUME applied);
+   bool              Initialize(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_PRICE applied);
   };
 //+------------------------------------------------------------------+
 //| Constructor                                                      |
@@ -209,7 +209,7 @@ CiOBV::~CiOBV(void)
 //+------------------------------------------------------------------+
 //| Create the "On Balance Volume" indicator                         |
 //+------------------------------------------------------------------+
-bool CiOBV::Create(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_VOLUME applied)
+bool CiOBV::Create(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_PRICE applied)
   {
    SetSymbolPeriod(symbol,period);
 //--- result of initialization
@@ -220,12 +220,12 @@ bool CiOBV::Create(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_A
 //+------------------------------------------------------------------+
 bool CiOBV::Initialize(const string symbol,const ENUM_TIMEFRAMES period,const int num_params,const MqlParam &params[])
   {
-   return(Initialize(symbol,period,(ENUM_APPLIED_VOLUME)params[0].integer_value));
+   return(Initialize(symbol,period,(ENUM_APPLIED_PRICE)params[0].integer_value));
   }
 //+------------------------------------------------------------------+
 //| Initialize the indicator with special parameters                 |
 //+------------------------------------------------------------------+
-bool CiOBV::Initialize(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_VOLUME applied)
+bool CiOBV::Initialize(const string symbol,const ENUM_TIMEFRAMES period,const ENUM_APPLIED_PRICE applied)
   {
    m_name="OBV";
 //--- save settings

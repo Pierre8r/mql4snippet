@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                    WndClient.mqh |
-//|                   Copyright 2009-2013, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2015, MetaQuotes Software Corp. |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
 #include "WndContainer.mqh"
@@ -257,10 +257,15 @@ bool CWndClient::Show(void)
   {
 //--- call of the method of the parent class
    CWndContainer::Show();
-//---
-   if(!m_v_scrolled)
+//--- show vertical scroll bar
+   if(m_v_scrolled)
+      m_scroll_v.Show();
+   else
       m_scroll_v.Hide();
-   if(!m_h_scrolled)
+//--- show horizontal scroll bar
+   if(m_h_scrolled)
+      m_scroll_h.Show();
+   else
       m_scroll_h.Hide();
 //--- succeed
    return(true);

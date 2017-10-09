@@ -1,10 +1,8 @@
 //+------------------------------------------------------------------+
 //|                                              Sample DLL for MQL4 |
-//|                   Copyright 2001-2015, MetaQuotes Software Corp. |
+//|                   Copyright 2001-2016, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
-#define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Windows headers
-#include "stdafx.h"
 #include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -207,16 +205,24 @@ MT4_EXPFUNC int __stdcall ProcessStringArray(MqlStr *arr,const int arraysize)
 //---
    for(int i=0; i<arraysize-1; i++)
      {
-      if(arr[i].string==NULL) len1=0;
-      else len1=strlen(arr[i].string);
-      if(arr[i+1].string==NULL) len2=0;
-      else len2=strlen(arr[i+1].string);
+      if(arr[i].string==NULL)
+         len1=0;
+      else
+         len1=strlen(arr[i].string);
+
+      if(arr[i+1].string==NULL)
+         len2=0;
+      else
+         len2=strlen(arr[i+1].string);
       //--- uninitialized string
-      if(arr[i+1].string==NULL) continue;
+      if(arr[i+1].string==NULL)
+         continue;
       //--- destination string is uninitialized and cannot be allocated within dll
-      if(arr[i].string==NULL)   continue;
+      if(arr[i].string==NULL)
+         continue;
       //--- memory piece is less than needed and cannot be reallocated within dll
-      if(arr[i].len<len1+len2)  continue;
+      if(arr[i].len<len1+len2)
+         continue;
       //--- final processing
       strcat(arr[i].string,arr[i+1].string);
      }
@@ -231,8 +237,10 @@ int CompareMqlStr(const void *left,const void *right)
    MqlStr *leftstr=(MqlStr *)left;
    MqlStr *rightstr=(MqlStr *)right;
 //---
-   if(leftstr->string==NULL) return(-1);
-   if(rightstr->string==NULL) return(1);
+   if(leftstr->string==NULL) 
+      return(-1);
+   if(rightstr->string==NULL) 
+      return(1);
 //---
    return(strcmp(leftstr->string,rightstr->string));
   }

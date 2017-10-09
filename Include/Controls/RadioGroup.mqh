@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                   RadioGroup.mqh |
-//|                   Copyright 2009-2013, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2016, MetaQuotes Software Corp. |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
 #include "WndClient.mqh"
@@ -41,6 +41,7 @@ public:
    bool              ValueCheck(long value) const;
    //--- state
    virtual bool      Show(void);
+   virtual void      RedrawButtonStates(void);
    //--- methods for working with files
    virtual bool      Save(const int file_handle);
    virtual bool      Load(const int file_handle);
@@ -218,6 +219,21 @@ bool CRadioGroup::Show(void)
       m_rows[i].Hide();
 //--- handled
    return(true);
+  }
+//+------------------------------------------------------------------+
+//| Recheck button object state                                      |
+//+------------------------------------------------------------------+
+void CRadioGroup::RedrawButtonStates(void)
+  {
+//--- loop by "rows"
+   for(int i=0;i<m_total_view;i++)
+     {
+      if(i>=ArraySize(m_rows))
+         break;
+      //--- select/unselect
+      m_rows[i].State(m_current==i+m_offset);
+     }
+//---
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

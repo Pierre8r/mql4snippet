@@ -1,14 +1,13 @@
 //+------------------------------------------------------------------+
 //|                                              PeriodConverter.mq4 |
-//|                   Copyright 2006-2014, MetaQuotes Software Corp. |
+//|                   Copyright 2006-2015, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
-#property copyright   "2006-2014, MetaQuotes Software Corp."
+#property copyright   "2006-2015, MetaQuotes Software Corp."
 #property link        "http://www.mql4.com"
 #property description "Period Converter to updated format of history base"
 #property strict
 #property show_inputs
-#include <WinUser32.mqh>
 
 input int InpPeriodMultiplier=3; // Period multiplier factor
 int       ExtHandle=-1;
@@ -21,7 +20,7 @@ void OnStart()
    ulong    last_fpos=0;
    long     last_volume=0;
    int      i,start_pos,periodseconds;
-   int      hwnd=0,cnt=0;
+   int      cnt=0;
 //---- History header
    int      file_version=401;
    string   c_copyright;
@@ -107,9 +106,11 @@ void OnStart()
         }
      } 
    FileFlush(ExtHandle);
-   Print(cnt," record(s) written");
+   PrintFormat("%d record(s) written",cnt);
 //--- collect incoming ticks
    datetime last_time=LocalTime()-5;
+   long     chart_id=0;
+//---
    while(!IsStopped())
      {
       datetime cur_time=LocalTime();
@@ -153,17 +154,31 @@ void OnStart()
          //----
          FileWriteStruct(ExtHandle,rate);
          FileFlush(ExtHandle);
-         //---
-         if(hwnd==0)
+         //--- target chart is not found yet. it can be opened via Main menu - File - Open offline
+         if(chart_id==0)
            {
-            hwnd=WindowHandle(Symbol(),i_period);
-            if(hwnd!=0)
-               Print("Chart window detected");
+            long id=ChartFirst();
+            while(id>=0)
+              {
+               //--- find appropriate offline chart
+               if(ChartSymbol(id)==Symbol() && ChartPeriod(id)==i_period && ChartGetInteger(id,CHART_IS_OFFLINE))
+                 {
+                  chart_id=id;
+                  ChartSetInteger(chart_id,CHART_AUTOSCROLL,true);
+                  ChartSetInteger(chart_id,CHART_SHIFT,true);
+                  ChartNavigate(chart_id,CHART_END);
+                  ChartRedraw(chart_id);
+                  PrintFormat("Chart window [%s,%d] found",Symbol(),i_period);
+                  break;
+                 }
+               //--- enumerate opened charts
+               id=ChartNext(id);
+              }
            }
          //--- refresh window not frequently than 1 time in 2 seconds
-         if(hwnd!=0 && cur_time-last_time>=2)
+         if(chart_id!=0 && cur_time-last_time>=2)
            {
-            PostMessageA(hwnd,WM_COMMAND,33324,0);
+            ChartSetSymbolPeriod(chart_id,Symbol(),i_period);
             last_time=cur_time;
            }
         }

@@ -93,6 +93,7 @@
 #define ERR_INDICATOR_CANNOT_LOAD                  4072   // new MQL4
 #define ERR_NO_HISTORY_DATA                        4073   // new MQL4
 #define ERR_NO_MEMORY_FOR_HISTORY                  4074   // new MQL4
+#define ERR_NO_MEMORY_FOR_INDICATOR                4075   // new MQL4
 #define ERR_END_OF_FILE                            4099
 #define ERR_SOME_FILE_ERROR                        4100
 #define ERR_WRONG_FILE_NAME                        4101
@@ -123,6 +124,13 @@
 #define ERR_NOTIFICATION_PARAMETER                 4251
 #define ERR_NOTIFICATION_SETTINGS                  4252
 #define ERR_NOTIFICATION_TOO_FREQUENT              4253
+#define ERR_FTP_NOSERVER                           4260   // new MQL4
+#define ERR_FTP_NOLOGIN                            4261   // new MQL4
+#define ERR_FTP_CONNECT_FAILED                     4262   // new MQL4
+#define ERR_FTP_CLOSED                             4263   // new MQL4
+#define ERR_FTP_CHANGEDIR                          4264   // new MQL4
+#define ERR_FTP_FILE_ERROR                         4265   // new MQL4
+#define ERR_FTP_ERROR                              4266   // new MQL4
 #define ERR_FILE_TOO_MANY_OPENED                   5001   // new MQL4
 #define ERR_FILE_WRONG_FILENAME                    5002   // new MQL4
 #define ERR_FILE_TOO_LONG_FILENAME                 5003   // new MQL4

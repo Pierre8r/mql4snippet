@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                     SpinEdit.mqh |
-//|                   Copyright 2009-2013, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2017, MetaQuotes Software Corp. |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
 #include "WndContainer.mqh"
@@ -38,7 +38,7 @@ public:
    //--- set up
    int               MinValue(void) const { return(m_min_value); }
    void              MinValue(const int value);
-   int               MaxValue(void) const { return(m_min_value); }
+   int               MaxValue(void) const { return(m_max_value); }
    void              MaxValue(const int value);
    //--- state
    int               Value(void) const { return(m_value); }

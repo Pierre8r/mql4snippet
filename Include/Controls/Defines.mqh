@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                      Defines.mqh |
-//|                   Copyright 2009-2013, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2015, MetaQuotes Software Corp. |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
@@ -167,6 +167,8 @@ enum ENUM_WND_ALIGN_FLAGS
 #define ON_INDEXED_EVENT(event,controls,handler) { int total=ArraySize(controls); for(int i=0;i<total;i++) if(id==(event+CHARTEVENT_CUSTOM) && lparam==controls[i].Id()) return(handler(i)); }
 //--- handling of external event
 #define ON_EXTERNAL_EVENT(event,handler)         if(id==(event+CHARTEVENT_CUSTOM)) { handler(lparam,dparam,sparam); return(true); }
+//--- handling the rest of unhandled events
+#define ON_OTHER_EVENTS(handler)                 if(handler(id,lparam,dparam,sparam)) return(true);
 //+------------------------------------------------------------------+
 //| Events                                                           |
 //+------------------------------------------------------------------+

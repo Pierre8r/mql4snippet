@@ -11,3 +11,4 @@ bool   CompareDoubles(double number1,double number2);
 string DoubleToStrMorePrecision(double number,int precision);
 string IntegerToHexString(int integer_number);
 
+#import

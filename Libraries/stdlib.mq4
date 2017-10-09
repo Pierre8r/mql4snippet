@@ -3,7 +3,7 @@
 //|                   Copyright 2005-2015, MetaQuotes Software Corp. |
 //|                                              http://www.mql4.com |
 //+------------------------------------------------------------------+
-#property copyright "2005-2014, MetaQuotes Software Corp."
+#property copyright "2005-2015, MetaQuotes Software Corp."
 #property link      "http://www.mql4.com"
 #property library
 //+------------------------------------------------------------------+
@@ -104,7 +104,8 @@ string ErrorDescription(int error_code)
       case 4071: error_string="cannot initialize custom indicator";                        break;
       case 4072: error_string="cannot load custom indicator";                              break;
       case 4073: error_string="no history data";                                           break;
-      case 4074: error_string="no memory for history data";                                break;
+      case 4074: error_string="not enough memory for history data";                        break;
+      case 4075: error_string="not enough memory for indicator";                           break;
       case 4099: error_string="end of file";                                               break;
       case 4100: error_string="some file error";                                           break;
       case 4101: error_string="wrong file name";                                           break;
@@ -135,6 +136,13 @@ string ErrorDescription(int error_code)
       case 4251: error_string="notification parameter error";                              break;
       case 4252: error_string="notifications disabled";                                    break;
       case 4253: error_string="notification send too frequent";                            break;
+      case 4260: error_string="ftp server is not specified";                               break;
+      case 4261: error_string="ftp login is not specified";                                break;
+      case 4262: error_string="ftp connect failed";                                        break;
+      case 4263: error_string="ftp connect closed";                                        break;
+      case 4264: error_string="ftp change path error";                                     break;
+      case 4265: error_string="ftp file error";                                            break;
+      case 4266: error_string="ftp error";                                                 break;
       case 5001: error_string="too many opened files";                                     break;
       case 5002: error_string="wrong file name";                                           break;
       case 5003: error_string="too long file name";                                        break;
